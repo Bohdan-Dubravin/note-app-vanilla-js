@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main class="container">
+      <div class="notes-head grid-table">
+        <div class="notes-item--head">Name</div>
+        <div class="notes-item--head">Created</div>
+        <div class="notes-item--head">Cateroty</div>
+        <div class="notes-item--head">Content</div>
+        <div class="notes-item--head">Dates</div>
+        <div class="notes-item--head">Actions</div>
+      </div>
+      <ul class="notes-list"></ul>
+      <button type="button" class="create-List-btn">Create note</button>
+
+      <div class="add-note-container display-none">
+        <div class="form-container">
+          <div class="close-btn">X</div>
+          <label class="input-label" for="name">Title</label>
+          <input class="input-name" id="name" type="text" />
+          <label class="input-label" for="content">Content</label>
+          <textarea
+            id="content"
+            class="input-content"
+            cols="40"
+            rows="10"
+          ></textarea>
+          <button type="button" class="create-button">ADD NOTE</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="../index.js"></script>
+  </body>
+</html>
