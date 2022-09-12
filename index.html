@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <main class="container">
+    <div class="container">
       <div class="notes-head grid-table">
         <div class="notes-item--head">Name</div>
         <div class="notes-item--head">Created</div>
@@ -18,9 +18,9 @@
         <div class="notes-item--head">Actions</div>
       </div>
       <ul class="notes-list"></ul>
-      <button type="button" class="create-List-btn">Create note</button>
+      <button type="button" class="add-note-btn">Create note</button>
 
-      <div class="add-note-container display-none">
+      <div class="popup-box add-note-container show">
         <div class="form-container">
           <div class="close-btn">X</div>
           <label class="input-label" for="name">Title</label>
@@ -32,11 +32,22 @@
             cols="40"
             rows="10"
           ></textarea>
+          <label class="input-label" for="category">Category</label>
+          <select name="category" class="select-option">
+            <option value="">Select category</option>
+            <option value="Task">Task</option>
+            <option value="Random Thought">Random Thought</option>
+            <option value="Idea">Idea</option>
+          </select>
           <button type="button" class="create-button">ADD NOTE</button>
         </div>
       </div>
-    </main>
+      <button class="archive-button">Show archive notes</button>
 
-    <script src="../index.js"></script>
+      <ul class="archive-list display"></ul>
+      <div class="summary"></div>
+    </div>
+
+    <script src="./js/main.js" type="module"></script>
   </body>
 </html>

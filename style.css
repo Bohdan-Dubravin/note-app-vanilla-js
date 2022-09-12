@@ -16,13 +16,20 @@ body {
 }
 
 .notes-head {
-  margin: 20px 0;
-  padding: 0 15px;
+  margin: 30px 0 10px 0;
+  padding: 0 10px;
   background-color: #ff6f61;
   color: #fff;
   height: 50px;
   line-height: 50px;
   text-align: center;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 10px;
 }
 
 .grid-table {
@@ -51,7 +58,7 @@ body {
   flex-direction: column;
 }
 
-.display-none {
+.show {
   opacity: 0;
   pointer-events: none;
 }
@@ -107,6 +114,7 @@ body {
   width: 40%;
   align-self: center;
   padding: 10px 0;
+  cursor: pointer;
 }
 
 .input-label {
@@ -114,5 +122,24 @@ body {
 }
 
 .note-content {
-  border: 1px solid black;
+  padding: 5px;
+}
+
+.notes-item {
+  border: 1px solid gray;
+  margin-bottom: 5px;
+}
+
+.select-option {
+  width: 50%;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.notes-item:nth-child(2n) {
+  background-color: #dfcfbe;
+}
+
+.display {
+  display: none;
 }
