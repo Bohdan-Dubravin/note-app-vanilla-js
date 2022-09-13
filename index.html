@@ -23,6 +23,7 @@
       <div class="popup-box add-note-container show">
         <div class="form-container">
           <div class="close-btn">X</div>
+          <h4 class="error"></h4>
           <label class="input-label" for="name">Title</label>
           <input class="input-name" id="name" type="text" />
           <label class="input-label" for="content">Content</label>
@@ -45,7 +46,18 @@
       <button class="archive-button">Show archive notes</button>
 
       <ul class="archive-list display"></ul>
-      <div class="summary"></div>
+      <div class="summary">
+        <table>
+          <thead class="table-head">
+            <tr class="table-head">
+              <th class="thead-cell">Category</th>
+              <th class="thead-cell">Active</th>
+              <th class="thead-cell">Archive</th>
+            </tr>
+          </thead>
+          <tbody class="summary-table"></tbody>
+        </table>
+      </div>
     </div>
 
     <script src="./js/main.js" type="module"></script>

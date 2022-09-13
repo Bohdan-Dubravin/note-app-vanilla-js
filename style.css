@@ -8,34 +8,92 @@ body {
 }
 
 .container {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
+}
+
+.img-container {
+  width: 30px;
+  height: 30px;
 }
 
 .notes-head {
   margin: 30px 0 10px 0;
-  padding: 0 10px;
   background-color: #ff6f61;
   color: #fff;
   height: 50px;
   line-height: 50px;
   text-align: center;
+  font-weight: 700;
+  border-radius: 10px;
 }
 
-.notes-list {
-  display: flex;
-  flex-direction: column;
+.image-icon {
   width: 100%;
-  padding: 0 10px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.image-icon:hover {
+  filter: sepia(51%) saturate(10000%);
+}
+
+.notes-list,
+.archive-list {
+  padding: 0;
+  width: 100%;
+  border: 1px solid #bdbdbd;
+  border-radius: 10px;
+}
+
+.notes-item {
+  display: flex;
+  align-items: center;
+}
+
+.note-content:nth-child(1) {
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.note-content:nth-child(2) {
+  font-size: 14px;
+  text-align: center;
+}
+
+.note-content:nth-child(3) {
+  font-size: 14px;
+  text-align: center;
+}
+
+.note-content:nth-child(4) {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.note-content:nth-child(4) {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.note-content:nth-child(5) {
+  font-size: 14px;
+  text-align: center;
+}
+
+.note-content:nth-child(6) {
+  display: flex;
+  justify-content: space-around;
 }
 
 .grid-table {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 1.5fr repeat(2, 1fr) 2fr repeat(2, 1fr);
 }
 
 .add-note-container {
@@ -105,16 +163,25 @@ body {
   resize: none;
 }
 
-.create-button {
+.create-button,
+.add-note-btn,
+.archive-button {
   border: none;
   border-radius: 10px;
   background-color: #ff6f61;
   color: #fff;
   font-weight: 800;
-  width: 40%;
+  width: fit-content;
   align-self: center;
-  padding: 10px 0;
+  padding: 10px 30px;
   cursor: pointer;
+  text-transform: uppercase;
+}
+
+.add-note-btn,
+.archive-button {
+  align-self: flex-end;
+  margin-bottom: 20px;
 }
 
 .input-label {
@@ -126,7 +193,6 @@ body {
 }
 
 .notes-item {
-  border: 1px solid gray;
   margin-bottom: 5px;
 }
 
@@ -137,9 +203,41 @@ body {
 }
 
 .notes-item:nth-child(2n) {
-  background-color: #dfcfbe;
+  background-color: #ffdedb;
+  color: #000;
 }
 
 .display {
   display: none;
+}
+
+.error {
+  color: red;
+  font-weight: 700;
+  text-align: center;
+}
+
+.summary {
+  position: fixed;
+  bottom: 0;
+  background-color: #ff6f61;
+  color: #fff;
+  font-weight: 600;
+  width: 80%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.table-head {
+  text-align: center;
+}
+
+.thead-cell {
+  padding: 10px 20px;
+}
+
+.summary-table {
+  text-align: center;
 }

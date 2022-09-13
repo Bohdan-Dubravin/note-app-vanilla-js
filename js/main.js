@@ -1,5 +1,6 @@
 import { initNotes, updateSummary } from './render.js';
-import { notes, archiveNotes } from './data.js';
+import { data } from './data.js';
+import { getActive, getArchived, getFullDate, findDates } from './utils.js';
 const root = document.querySelector('.container');
 
 const addNoteBtn = root.querySelector('.add-note-btn'),
@@ -12,15 +13,18 @@ const addNoteBtn = root.querySelector('.add-note-btn'),
   archiveBtn = root.querySelector('.archive-note'),
   showArchiveBtn = root.querySelector('.archive-button'),
   archiveList = root.querySelector('.archive-list'),
-  notesList = root.querySelector('.notes-list');
+  notesList = root.querySelector('.notes-list'),
+  errorText = root.querySelector('.error');
 
-let notesArr = [...notes];
-let archiveNotesArr = [...archiveNotes];
+let allNotes = [...data];
+
+let activeNotesArr = getActive(allNotes);
+let archiveNotesArr = getArchived(allNotes);
 
 let isUpdate = false,
   updateId;
 
-updateSummary([...notesArr, ...archiveNotesArr]);
+updateSummary([...activeNotesArr, ...archiveNotesArr]);
 
 addNoteBtn.addEventListener('click', () => {
   popupBox.classList.toggle('show');
@@ -29,6 +33,7 @@ addNoteBtn.addEventListener('click', () => {
 closeBtn.addEventListener('click', () => {
   isUpdate = false;
   popupBox.classList.toggle('show');
+  errorText.innerHTML = '';
 });
 
 showArchiveBtn.addEventListener('click', () => {
@@ -36,29 +41,34 @@ showArchiveBtn.addEventListener('click', () => {
   initNotes(archiveNotesArr, archiveList);
 });
 
+const updateInfo = () => {
+  activeNotesArr = getActive(allNotes);
+  archiveNotesArr = getArchived(allNotes);
+  initNotes(activeNotesArr, notesList);
+  initNotes(archiveNotesArr, archiveList);
+  updateSummary([...activeNotesArr, ...archiveNotesArr]);
+};
+
 const unarchiveNote = (e) => {
   const noteId = +e.target.closest('.notes-item').dataset.id;
   const unarchiveNote = archiveNotesArr.find((note) => note.id === noteId);
   unarchiveNote.archive = false;
   archiveNotesArr = archiveNotesArr.filter((note) => note.id !== noteId);
-  notesArr.push(unarchiveNote);
-  initNotes(notesArr, notesList);
-  initNotes(archiveNotesArr, archiveList);
-  updateSummary([...notesArr, ...archiveNotesArr]);
+  activeNotesArr.push(unarchiveNote);
+
+  updateInfo();
 };
 
 const archiveNote = (e) => {
   const noteId = +e.target.closest('.notes-item').dataset.id;
-  const noteToArchive = notesArr.find((note) => note.id === noteId);
+  const noteToArchive = activeNotesArr.find((note) => note.id === noteId);
   noteToArchive.archive = true;
-  notesArr = notesArr.filter((note) => note.id !== noteId);
+  activeNotesArr = activeNotesArr.filter((note) => note.id !== noteId);
   archiveNotesArr.push(noteToArchive);
-  initNotes(notesArr, notesList);
-  initNotes(archiveNotesArr, archiveList);
-  updateSummary([...notesArr, ...archiveNotesArr]);
+  updateInfo();
 };
 
-initNotes(notesArr, notesList);
+initNotes(activeNotesArr, notesList);
 
 notesList.addEventListener('click', (e) => noteOperations(e));
 archiveList.addEventListener('click', (e) => noteOperations(e));
@@ -77,15 +87,13 @@ const noteOperations = (e) => {
 
 const deleteNote = (e) => {
   const item = e.target.closest('.notes-item');
-  notesArr = notesArr.filter((note) => +item.dataset.id !== note.id);
-
-  initNotes(notesArr, notesList);
-  updateSummary([...notesArr, ...archiveNotesArr]);
+  allNotes = allNotes.filter((note) => +item.dataset.id !== note.id);
+  updateInfo();
 };
 
 const updateNote = (e) => {
   const noteId = +e.target.closest('.notes-item').dataset.id;
-  const note = notesArr.find((note) => note.id === noteId);
+  const note = allNotes.find((note) => note.id === noteId);
   updateId = noteId;
   isUpdate = true;
   titleInput.value = note.name;
@@ -93,13 +101,17 @@ const updateNote = (e) => {
   categoryInput.value = note.category;
   createBtn.innerText = 'Update Note';
   addNoteBtn.click();
-  // initNotes(notesArr, notesList);
 };
-const openForm = () => {
+
+const sendForm = () => {
   const title = titleInput.value.trim(),
     description = contentInput.value.trim(),
     category = categoryInput.value;
-  if (title && description && category) {
+
+  try {
+    if (!title || !description || !category) {
+      throw Error('FILL IN ALL THE FIELDS');
+    }
     const noteInfo = {
       name: title,
       category: category,
@@ -107,12 +119,17 @@ const openForm = () => {
     };
 
     createNote(noteInfo);
-    initNotes(notesArr, notesList);
     closeBtn.click();
+    errorText.innerHTML = '';
+    titleInput.value = '';
+    contentInput.value = '';
+    categoryInput.value = '';
+  } catch (error) {
+    errorText.innerHTML = error;
   }
 };
 
-createBtn.addEventListener('click', openForm);
+createBtn.addEventListener('click', sendForm);
 
 const createNote = (userInput) => {
   const id = +new Date();
@@ -122,10 +139,10 @@ const createNote = (userInput) => {
   const newNote = { ...userInput, dates, creationDate, id, archive };
 
   if (!isUpdate) {
-    notesArr.push(newNote);
+    allNotes.push(newNote);
   } else {
     isUpdate = false;
-    notesArr = notesArr.map((note) => {
+    allNotes = allNotes.map((note) => {
       if (note.id === updateId) {
         return {
           ...newNote,
@@ -135,21 +152,5 @@ const createNote = (userInput) => {
       }
     });
   }
-  updateSummary([...notesArr, ...archiveNotesArr]);
-};
-
-const getFullDate = () => {
-  const today = new Date();
-  const month = today.toLocaleString('default', { month: 'long' }),
-    day = today.getDate(),
-    year = today.getFullYear();
-
-  return `${month} ${day}, ${year}`;
-};
-
-const findDates = (str) => {
-  const dates = str.match(
-    /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/g
-  );
-  return dates;
+  updateInfo();
 };

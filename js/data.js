@@ -1,4 +1,4 @@
-const notes = [
+const data = [
   {
     id: 1,
     name: 'First note',
@@ -62,9 +62,6 @@ const notes = [
     dates: 'just date 02/02/2022',
     archive: false,
   },
-];
-
-const archiveNotes = [
   {
     id: 8,
     name: 'Second note',
@@ -74,6 +71,42 @@ const archiveNotes = [
     dates: 'just date',
     archive: true,
   },
+  {
+    id: 9,
+    name: 'Second note',
+    creationDate: '01/01/2032',
+    category: 'Idea',
+    content: 'some content',
+    dates: 'just date',
+    archive: true,
+  },
+  {
+    id: 10,
+    name: 'Second note',
+    creationDate: '01/01/2032',
+    category: 'Idea',
+    content: 'some content',
+    dates: 'just date',
+    archive: true,
+  },
+  {
+    id: 11,
+    name: 'Second note',
+    creationDate: '01/01/2032',
+    category: 'Idea',
+    content: 'some content',
+    dates: 'just date',
+    archive: true,
+  },
+  {
+    id: 12,
+    name: 'Second note',
+    creationDate: '01/01/2032',
+    category: 'Idea',
+    content: 'some content',
+    dates: 'just date',
+    archive: true,
+  },
 ];
 
-export { notes, archiveNotes };
+export { data };

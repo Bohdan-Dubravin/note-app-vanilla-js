@@ -1,4 +1,4 @@
-const sum = document.querySelector('.summary');
+const sum = document.querySelector('.summary-table');
 
 const initNotes = (notes, HTMLelement) => {
   if (!notes) return;
@@ -14,21 +14,24 @@ const initNotes = (notes, HTMLelement) => {
             <p class="note-content">${note.content}</p>
             <p class="note-content">${note.dates}</p>
             <div class="note-content">
-              <button 
-               
+              <div 
+              class="img-container"
               id=${note.id} 
-              class="edit-note"
               >
-                Edit
-              </button>
-              <button  class="delete-note">
-                Delete
-            </button>
-            <button  class="${
-              !note.archive ? 'archive-note' : 'unarchive-note'
-            }">
-                ${!note.archive ? 'Archive' : 'Unarchive'}
-            </button>
+              <img class="edit-note image-icon" src="/assets/edit-icon.svg" alt="edit-icon">
+              </div>
+              <div class="img-container">
+              <img class="delete-note image-icon" src="/assets/delete-icon.svg" alt="delete-icon">
+            </div>
+            <div class="img-container">
+               <img 
+                src="/assets/archive-icon.svg" 
+                class="image-icon ${
+                  !note.archive ? 'archive-note' : 'unarchive-note '
+                }" 
+                alt="archive-icon"
+               >
+            </div>
             </div>
           </li>`
     );
@@ -62,7 +65,11 @@ const updateSummary = (arr) => {
     sum.insertAdjacentHTML(
       'beforeend',
       `
-        <div>${category} Active${summary[category].active}  Archived${summary[category].archived}</div>`
+        <tr>
+        <td>${category}</td>
+        <td>${summary[category].active}</td>
+        <td>${summary[category].archived}</td>
+        </tr>`
     );
   }
 };
