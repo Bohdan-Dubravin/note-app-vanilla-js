@@ -17,14 +17,16 @@ const addNoteBtn = root.querySelector('.add-note-btn'),
   errorText = root.querySelector('.error');
 
 let allNotes = [...data];
-
 let activeNotesArr = getActive(allNotes);
 let archiveNotesArr = getArchived(allNotes);
-
 let isUpdate = false,
   updateId;
 
 updateSummary([...activeNotesArr, ...archiveNotesArr]);
+initNotes(activeNotesArr, notesList);
+
+notesList.addEventListener('click', (e) => noteOperations(e));
+archiveList.addEventListener('click', (e) => noteOperations(e));
 
 addNoteBtn.addEventListener('click', () => {
   popupBox.classList.toggle('show');
@@ -67,11 +69,6 @@ const archiveNote = (e) => {
   archiveNotesArr.push(noteToArchive);
   updateInfo();
 };
-
-initNotes(activeNotesArr, notesList);
-
-notesList.addEventListener('click', (e) => noteOperations(e));
-archiveList.addEventListener('click', (e) => noteOperations(e));
 
 const noteOperations = (e) => {
   if (e.target.matches('.delete-note')) {
@@ -136,6 +133,8 @@ const createNote = (userInput) => {
   const creationDate = getFullDate();
   const dates = findDates(userInput.content) || '';
   const archive = false;
+  if (isUpdate) {
+  }
   const newNote = { ...userInput, dates, creationDate, id, archive };
 
   if (!isUpdate) {
@@ -144,8 +143,13 @@ const createNote = (userInput) => {
     isUpdate = false;
     allNotes = allNotes.map((note) => {
       if (note.id === updateId) {
+        const { name, category, content, dates } = newNote;
         return {
-          ...newNote,
+          ...note,
+          name,
+          category,
+          content,
+          dates,
         };
       } else {
         return note;

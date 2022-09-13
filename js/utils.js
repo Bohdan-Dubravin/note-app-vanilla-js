@@ -21,3 +21,26 @@ export const findDates = (str) => {
   );
   return dates;
 };
+
+export const summary = (arr) => {
+  return arr.reduce((acc, note) => {
+    if (!acc[note.category]) {
+      return {
+        ...acc,
+        [note.category]: {
+          archived: note.archive ? 1 : 0,
+          active: !note.archive ? 1 : 0,
+        },
+      };
+    } else {
+      const isActive = note.archive ? 'archived' : 'active';
+      return {
+        ...acc,
+        [note.category]: {
+          ...acc[note.category],
+          [isActive]: acc[note.category][isActive] + 1,
+        },
+      };
+    }
+  }, {});
+};
