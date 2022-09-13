@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <main class="container">
+    <div class="container">
       <div class="notes-head grid-table">
         <div class="notes-item--head">Name</div>
         <div class="notes-item--head">Created</div>
@@ -18,11 +18,12 @@
         <div class="notes-item--head">Actions</div>
       </div>
       <ul class="notes-list"></ul>
-      <button type="button" class="create-List-btn">Create note</button>
+      <button type="button" class="add-note-btn">Create note</button>
 
-      <div class="add-note-container display-none">
+      <div class="popup-box add-note-container show">
         <div class="form-container">
           <div class="close-btn">X</div>
+          <h4 class="error"></h4>
           <label class="input-label" for="name">Title</label>
           <input class="input-name" id="name" type="text" />
           <label class="input-label" for="content">Content</label>
@@ -32,11 +33,33 @@
             cols="40"
             rows="10"
           ></textarea>
+          <label class="input-label" for="category">Category</label>
+          <select name="category" class="select-option">
+            <option value="">Select category</option>
+            <option value="Task">Task</option>
+            <option value="Random Thought">Random Thought</option>
+            <option value="Idea">Idea</option>
+          </select>
           <button type="button" class="create-button">ADD NOTE</button>
         </div>
       </div>
-    </main>
+      <button class="archive-button">Show archive notes</button>
 
-    <script src="../index.js"></script>
+      <ul class="archive-list display"></ul>
+      <div class="summary">
+        <table>
+          <thead class="table-head">
+            <tr class="table-head">
+              <th class="thead-cell">Category</th>
+              <th class="thead-cell">Active</th>
+              <th class="thead-cell">Archive</th>
+            </tr>
+          </thead>
+          <tbody class="summary-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="./js/main.js" type="module"></script>
   </body>
 </html>
