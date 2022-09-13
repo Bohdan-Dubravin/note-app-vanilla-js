@@ -20,14 +20,14 @@ const initNotes = (notes, HTMLelement) => {
               class="img-container"
               id=${note.id} 
               >
-              <img class="edit-note image-icon" src="/assets/edit-icon.svg" alt="edit-icon">
+              <img class="edit-note image-icon" src="./assets/edit-icon.svg" alt="edit-icon">
               </div>
               <div class="img-container">
-              <img class="delete-note image-icon" src="/assets/delete-icon.svg" alt="delete-icon">
+              <img class="delete-note image-icon" src="./assets/delete-icon.svg" alt="delete-icon">
             </div>
             <div class="img-container">
                <img 
-                src="/assets/archive-icon.svg" 
+                src="./assets/archive-icon.svg" 
                 class="image-icon ${
                   !note.archive ? 'archive-note' : 'unarchive-note '
                 }" 
